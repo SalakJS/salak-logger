@@ -1,0 +1,39 @@
+{
+  "name": "salak-logger",
+  "version": "1.0.0",
+  "description": "logger for salak",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salakjs/salak-logger.git"
+  },
+  "keywords": [
+    "salak",
+    "winston",
+    "logger"
+  ],
+  "author": "wengeek <wenwei897684475@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/salakjs/salak-logger/issues"
+  },
+  "homepage": "https://github.com/salakjs/salak-logger#readme",
+  "dependencies": {
+    "colors": "^1.3.0",
+    "fs-extra": "^6.0.1",
+    "triple-beam": "^1.3.0",
+    "winston": "^3.0.0",
+    "winston-daily-rotate-file": "^3.2.3"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0"
+  }
+}
