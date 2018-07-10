@@ -51,9 +51,26 @@ app.logger.info('log')
 - `defaultLevel` **{String}** log output level, default `app.env === 'production' ? 'info' : 'debug'`
 - `transports` **{Object}** transports for category
 
+## options for capture
+
+- `enable` **{Boolean}** log the http request, default `true`
+- `level` **{String}** logger level, when set to `auto`, the logger level will be seted by http status code, default `auto`
+- `category` **{String}** logger category, default `http`
+
 ## options for transports
 
 type: Map
+
+default:
+```javascript
+transports: {
+  console: { type: 'console' },
+  default: createFileTransport({ filename: 'default' }),
+  app: !isSingleCategory && createFileTransport({ filename: 'app' }),
+  http: !isSingleCategory && createFileTransport({ filename: 'access' }),
+  error: createFileTransport({ filename: 'error', level: 'error' })
+}
+```
 
 - `key` **{String}** transport name
 - `value` **{Object}** transport options
@@ -62,16 +79,39 @@ type: Map
 ## options for category
 
 - `transports` **{Array<String|Transport>}** transport referred to transports which defined
-- `level` **{String}** log level， default `${options.defaultLevel}`
+- `level` **{String}** log level, default `${options.defaultLevel}`
 
 ## options for categories
 
 type: Map
 
+default:
+```javascript
+categories: {
+  default: {
+    transports: [
+      'default',
+      'error'
+    ]
+  },
+  app: {
+    transports: [
+      'app',
+      'error'
+    ]
+  },
+  http: {
+    transports: [
+      'http'
+    ]
+  }
+}
+```
+
 - `key` **{String}** category name
 - `value` **{Object}** category options
 - `value.transports` **{Array<String|Transport>}** transport referred to transports which defined
-- `value.level` **{String}** log level， default `${options.defaultLevel}`
+- `value.level` **{String}** log level, default `${options.defaultLevel}`
 
 ## License
 

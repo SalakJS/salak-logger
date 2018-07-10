@@ -3,6 +3,7 @@ const winston = require('winston')
 const DailyRotateFile = require('winston-daily-rotate-file')
 const fse = require('fs-extra')
 const path = require('path')
+const debug = require('debug')('salak-logger')
 const format = require('./lib/format')
 const httpLog = require('./lib/http')
 
@@ -62,9 +63,7 @@ module.exports = (options = {}, app) => {
     }
   }
   const transports = Object.assign({}, {
-    console: {
-      type: 'console'
-    },
+    console: { type: 'console' },
     default: createFileTransport({ filename: 'default' }),
     app: !isSingleCategory && createFileTransport({ filename: 'app' }),
     http: !isSingleCategory && createFileTransport({ filename: 'access' }),
@@ -101,8 +100,7 @@ module.exports = (options = {}, app) => {
 
   if (injectConsole) {
     for (let key in categories) {
-      assert(categories[key].transports, `${key} must provide transport option`)
-      if (categories[key].transports.indexOf('console') === -1) {
+      if (categories[key].transports && categories[key].transports.indexOf('console') === -1) {
         categories[key].transports.push('console')
       }
     }
@@ -128,13 +126,16 @@ module.exports = (options = {}, app) => {
 
   const target = {}
   for (let key in categories) {
+    assert(categories[key].transports, `logger: ${key} must provide transports option`)
     target[key] = createLogger(key, categories[key])
+    debug(`register category: ${key}`)
   }
 
   const levels = ['silly', 'debug', 'verbose', 'info', 'warn', 'error']
   levels.forEach((method) => {
     const logger = target['default']
     target[method] = logger[method].bind(logger)
+    debug(`register default logger method: ${method}`)
   })
 
   const loggerObj = new Proxy(target, {
@@ -149,6 +150,7 @@ module.exports = (options = {}, app) => {
 
   if (capture.enable !== false) {
     app.use(httpLog(capture, app))
+    debug('enable capture http request')
   }
 
   return loggerObj
