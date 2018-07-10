@@ -2,6 +2,7 @@
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
+[![Test coverage][coveralls-image]][coveralls-url]
 [![David deps][david-image]][david-url]
 [![NPM download][download-image]][download-url]
 
@@ -9,6 +10,8 @@
 [npm-url]: https://npmjs.org/package/salak-logger
 [travis-image]: https://img.shields.io/travis/SalakJS/salak-logger.svg?style=flat-square
 [travis-url]: https://travis-ci.org/SalakJS/salak-logger
+[coveralls-image]: https://img.shields.io/codecov/c/github/salakjs/salak-logger.svg?style=flat-square
+[coveralls-url]: https://codecov.io/github/salakjs/salak-logger?branch=master
 [david-image]: https://img.shields.io/david/SalakJS/salak-logger.svg?style=flat-square
 [david-url]: https://david-dm.org/SalakJS/salak-logger
 [download-image]: https://img.shields.io/npm/dm/salak-logger.svg?style=flat-square
