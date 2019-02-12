@@ -134,7 +134,7 @@ module.exports = (options = {}, app) => {
 
   if (removeConsoleAfterServerStart && injectConsole) {
     app.once('server_start', () => {
-      for (let key in target) {
+      for (let key in categories) {
         target[key].remove(transportInstances['console'])
       }
     })
