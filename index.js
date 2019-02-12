@@ -19,7 +19,8 @@ module.exports = (options = {}, app) => {
   const { baseDir, env } = app
   const {
     root = path.join(baseDir, 'logs'),
-    injectConsole = env === 'development',
+    injectConsole = true,
+    removeConsoleAfterServerStart = env === 'production',
     formatType = 'log4js',
     fileType = 'file',
     capture = {
@@ -129,6 +130,14 @@ module.exports = (options = {}, app) => {
     assert(categories[key].transports, `logger: ${key} must provide transports option`)
     target[key] = createLogger(key, categories[key])
     debug(`register category: ${key}`)
+  }
+
+  if (removeConsoleAfterServerStart && injectConsole) {
+    app.once('server_start', () => {
+      for (let key in target) {
+        target[key].remove(transportInstances['console'])
+      }
+    })
   }
 
   const levels = ['silly', 'debug', 'verbose', 'info', 'warn', 'error']

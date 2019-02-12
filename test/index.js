@@ -51,9 +51,11 @@ describe('test salak-logger', () => {
       expectMatchedLog('default/default.log', 'INFO', 'test')
     })
 
-    it('not console in production', async () => {
+    it('not console when set `injectConsole = false`', async () => {
       app.env = 'production'
-      app.logger = createLogger()
+      app.logger = createLogger({
+        injectConsole: false
+      })
       app.logger.info('test')
 
       await sleep(100)

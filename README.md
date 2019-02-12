@@ -45,7 +45,8 @@ app.logger.info('log')
 ## Options
 
 - `root` **{String}** directory for storing logs, default `path.join(app.baseDir, 'logs')`
-- `injectConsole` **{Boolean}** inject console transport for logger，default `app.env === 'developmemt'`
+- `injectConsole` **{Boolean}** inject console transport for logger，default `true`
+- `removeConsoleAfterServerStart` **{Boolean}** remove console transport after server start,default `app.env === 'production'`
 - `formatType` **{String}** type for logger format, log4js or json, default `log4js`
 - `fileType` **{String}** file type for storing log, file or dateFile, default `file`
 - `category` **{Object}** optional, default `undefined`
