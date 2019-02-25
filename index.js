@@ -28,7 +28,8 @@ module.exports = (options = {}, app) => {
       category: 'http',
       level: 'auto'
     },
-    defaultLevel = env === 'production' ? 'info' : 'debug'
+    defaultLevel = env === 'production' ? 'info' : 'debug',
+    transportsDefaultOptions = {}
   } = options
   const isSingleCategory = !!options.category
   const categories = isSingleCategory ? {
@@ -57,11 +58,13 @@ module.exports = (options = {}, app) => {
     level,
     filename
   }) => {
-    return {
-      type: transportsType[type] ? type : 'file',
-      level,
-      filename: isSingleCategory ? `${filename}.log` : `${filename}/${filename}.log`
-    }
+    const transportType = transportsType[type] ? type : 'file'
+
+    return Object.assign({}, transportsDefaultOptions[transportType] || {}, {
+      filename: isSingleCategory ? `${filename}.log` : `${filename}/${filename}.log`,
+      type: transportType,
+      level
+    })
   }
   const transports = Object.assign({}, {
     console: { type: 'console' },

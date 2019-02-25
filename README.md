@@ -54,6 +54,7 @@ app.logger.info('log')
 - `capture` **{Object}** options to pass to the http request log
 - `defaultLevel` **{String}** log output level, default `app.env === 'production' ? 'info' : 'debug'`
 - `transports` **{Object}** transports for category
+- `transportsDefaultOptions` **{Object}** default options for transports, like `file`, `dateFile`
 
 ## options for capture
 
@@ -79,6 +80,19 @@ transports: {
 - `key` **{String}** transport name
 - `value` **{Object}** transport options
 - `value.type` **{String}** can be set to 'console', 'file', 'http', 'stream', 'dateFile', refer [transport options](https://github.com/winstonjs/winston/blob/master/docs/transports.md), [dateFile options](https://github.com/winstonjs/winston-daily-rotate-file#options)
+
+## options for transportsDefaultOptions
+
+type: Map
+
+```javascript
+transportsDefaultOptions: {
+  file: {
+    maxFiles: 30, // 30 files
+    maxsize: 100 * 1024 * 1024 // 100m
+  }
+}
+```
 
 ## options for category
 
