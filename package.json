@@ -1,6 +1,6 @@
 {
   "name": "salak-logger",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "logger for salak",
   "main": "index.js",
   "scripts": {

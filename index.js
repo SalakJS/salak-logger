@@ -66,13 +66,31 @@ module.exports = (options = {}, app) => {
       level
     })
   }
+
+  const parseTransports = (transports = {}) => {
+    const result = {}
+    for (let key in transports) {
+      const item = transports[key]
+      const { type } = item
+      const defaultOpts = transportsDefaultOptions[type]
+
+      if (defaultOpts) {
+        result[key] = Object.assign({}, defaultOpts, item)
+      } else {
+        result[key] = item
+      }
+    }
+
+    return result
+  }
+
   const transports = Object.assign({}, {
     console: { type: 'console' },
     default: createFileTransport({ filename: 'default' }),
     app: !isSingleCategory && createFileTransport({ filename: 'app' }),
     http: !isSingleCategory && createFileTransport({ filename: 'access' }),
     error: createFileTransport({ filename: 'error', level: 'error' })
-  }, options.transports)
+  }, parseTransports(options.transports))
 
   fse.ensureDirSync(root)
 
